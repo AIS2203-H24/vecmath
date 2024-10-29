@@ -11,10 +11,11 @@ def load_library():
     def suffix() -> str:
         return ".dll" if os.name == "nt" else ".so"
 
-    bin_folder = f"{__file__}/../../cmake-build-debug/bin/"
-    os.add_dll_directory(bin_folder)
+    def prefix() ->str:
+        return "" if os.name == "nt" else "lib"
 
-    return ctypes.CDLL(f"vecmathc{suffix()}")
+    bin_folder = f"{__file__}/../build/bin"
+    return ctypes.CDLL(f"{bin_folder}/{prefix()}vecmathc{suffix()}")
 
 
 handle = load_library()
